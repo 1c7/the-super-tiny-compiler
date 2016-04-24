@@ -931,7 +931,8 @@ function transformer(ast) {
   //
   // Just take note that the context is a reference *from* the old ast *to* the
   // new ast.
-  // 旧 AST 的 context 指向了 新 AST 的 body
+  // 旧 AST 的 _context 指向了 新 AST 的 body
+  // 就是说你往 _context 里面 push 和 push 到 body 是一回事
   ast._context = newAst.body;
 
   // We'll start by calling the traverser function with our ast and a visitor.
@@ -939,24 +940,25 @@ function transformer(ast) {
   traverser(ast, {
 
     // The first visitor method accepts `NumberLiterals`
-    // 
+    // 处理数字
     NumberLiteral: function(node, parent) {
       // We'll create a new node also named `NumberLiteral` that we will push to
       // the parent context.
-      // 这么写就直接进 新 AST 的 body 了 
-      parent._context.push({
+      // 这样 NumberLiteral 就会进上级 CallExp 的 arguments 里了
+      // 之所以管用请看下面 CallExpression 写了 node._haha = expression.arguments;
+      parent._haha.push({
         type: 'NumberLiteral',
         value: node.value
       });
     },
 
     // Next up, `CallExpressions`.
-    // 下一个 `CallExpressions`
+    // 处理调用表达式 (CallExpressions)
     CallExpression: function(node, parent) {
 
       // We start creating a new node `CallExpression` with a nested
       // `Identifier`.
-      // 创建个新节点叫 CallExpression 嵌套个 Identifier
+      // 创建个新节点 把 name 先包一下
       var expression = {
         type: 'CallExpression',
         callee: {
@@ -969,29 +971,32 @@ function transformer(ast) {
       // Next we're going to define a new context on the original
       // `CallExpression` node that will reference the `expression`'s arguments
       // so that we can push arguments.
-      // 给旧 AST 的当前遍历节点, 弄个 _content 属性
-      // 指向新节点的 arguments 属性
-      // 然后我们就可以往里 push 参数了
-      node._context = expression.arguments;
+      // 注意这里是给 CallExpression 节点自己, 定义一个 _haha ，和 ast._context 是没有任何关系的
+      node._haha = expression.arguments;
 
       // Then we're going to check if the parent node is a `CallExpression`.
       // If it is not...
+      // 看看上级节点是不是 CallExpress, 不是就包多一层. 是就不包
+      // 那么顶层的 CallExp 会被包(那个add)  而里面的 CallExp(subtract) 就不会被包
       if (parent.type !== 'CallExpression') {
 
         // We're going to wrap our `CallExpression` node with an
         // `ExpressionStatement`. We do this because the top level
         // `CallExpressions` in JavaScript are actually statements.
-        // 我们用 ExpressionStatement 把 CallExpression 套里面
+        // 包法: 用 ExpressionStatement 把 CallExpression 套里面
         expression = {
           type: 'ExpressionStatement',
           expression: expression
         };
+        
+        parent._context.push(expression); // 如果是 add 就会调用到这里
+        // 结果就是 push 到 ast._context 里，从而就 push 到 newAST.body 里了
+      } else {
+        parent._haha.push(expression); // 如果是 subtract 就会调用到这里
+        // 那么正确的结果是挂载到上级 add 的 arguments 里, 那么这样一 push 就行了
       }
 
-      // Last, we push our (possibly wrapped) `CallExpression` to the `parent`'s
-      // `context`.
-      // 最后我们把刚刚创建的新节点 expression push 到 parents._context
-      parent._context.push(expression);
+
     }
   });
 
@@ -1026,14 +1031,16 @@ function codeGenerator(node) {
 
     // If we have a `Program` node. We will map through each node in the `body`
     // and run them through the code generator and join them with a newline.
-    // 如果节点类型的 Program. 我们就
+    // 对于并列语句如 (add 2 3)(subtract 4 5), 下面这种做法会导致换行, 变成
+    // add(2,3);
+    // subtract(4,5);
     case 'Program':
       return node.body.map(codeGenerator)
         .join('\n');
 
     // For `ExpressionStatements` we'll call the code generator on the nested
     // expression and we'll add a semicolon...
-    // 对于
+    // 这里就只是加分号
     case 'ExpressionStatement':
       return (
         codeGenerator(node.expression) +
@@ -1044,6 +1051,8 @@ function codeGenerator(node) {
     // parenthesis, we'll map through each node in the `arguments` array and run
     // them through the code generator, joining them with a comma, and then
     // we'll add a closing parenthesis.
+    // 重新折腾函数名, 括号和分号
+    // 把 (add 2 3) 变成 add(2,3) 的就是这个部分
     case 'CallExpression':
       return (
         codeGenerator(node.callee) +
@@ -1054,14 +1063,18 @@ function codeGenerator(node) {
       );
 
     // For `Identifiers` we'll just return the `node`'s name.
+    // 对于函数名就直接返回名字, 不然就永远递归下去了, 要有基础案例(base case)才行
     case 'Identifier':
       return node.name;
 
     // For `NumberLiterals` we'll just return the `node`'s value.
+    // 对于数字节点就返回数字, 同理
     case 'NumberLiteral':
       return node.value;
 
     // And if we haven't recognized the node, we'll throw an error.
+    // 正常情况所有类型我们都处理到了，不会跑到这里，跑到这里说明有其他类型了
+    // 我们不认得就报个错
     default:
       throw new TypeError(node.type);
   }
@@ -1082,7 +1095,7 @@ function codeGenerator(node) {
  *   3. ast    => transformer => newAst
  *   4. newAst => generator   => output
  *   
- *   终于要结束了! 我们定义一个 compiler 函数, 把各个部分组合在一起
+ *   终于要结束了! 我们定义个 compiler 函数, 把各个部分组合在一起
  *   这个函数接收源代码, 输出编译后的代码
  */
 
@@ -1102,7 +1115,7 @@ function compiler(input) {
  */
 
 // Now I'm just exporting everything...
-// 导出所有东西
+// 导出所有东西, 不然在 test.js 里 require 之后会拿不到这些函数, 提示 xxx is not a function 错误(好像是这样你可以试试)
 module.exports = {
   tokenizer: tokenizer,
   parser: parser,
@@ -1110,17 +1123,4 @@ module.exports = {
   codeGenerator: codeGenerator,
   compiler: compiler
 };
-/*
- 总结: 
- tokenizer 就是一个个读字符, 把各个东西分类, 是数字还是名字还是括号, 三种, 没了.
- 变成了一个数组, 数组里每个元素都是个对象, 说明是数字还是名字还是括号, 用 type 和 value 
- 
- parser walk() 递归 把平行的数组元素嵌套成一个 AST 
- 
- transformer 调了 traverser 最后是个新 AST
- 
- codeGenerator 递归
-*/
-
-
 
