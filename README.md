@@ -54,12 +54,12 @@ Run with `node test.js`
 ---
 
 
-### 首先
+### 1. 首先
 这个编译器用的语言是 Node.js <br/>
 编译器能把 ``` (add 2 (substract 4 2)) ``` 编译成 ``` add(2, subtract(4, 2)); ``` <br/>
 
 
-#### 建议
+#### 2. 建议
 当前(2016年4月)的 Node.js 版本是 5.10.1 如果你的版本还是旧的 0.10 记得升级, 不然运行不了.
 
 建议看 https://www.youtube.com/watch?v=Tar4WgAfMr4 (Youtube 原视频) <br/>
@@ -70,11 +70,11 @@ Run with `node test.js`
 如果你对翻译有任何改进意见可以直接开 issue(比较省事) 或者是 fork 下来自己改, 然后 pull request. <br/>
 
 <br/>
-### 怎么学
-1  直接打开 super-tiny-compiler.js 看代码和详细的注释即可
+#### 3. 怎么学
+1  直接打开 super-tiny-compiler.js 看代码和详细的注释即可 <br/>
 2  看完 NodeJS 版本应该就差不多了, 想看看 Python 的可以看: 
-https://github.com/josegomezr/the-super-tiny-compiler
-3  想看 Ruby 版的可以看
+https://github.com/josegomezr/the-super-tiny-compiler <br/>
+3  想看 Ruby 版的可以看 super-tiny-compiler.rb <br/>
 
 文件说明: 
 
@@ -85,9 +85,14 @@ no-comments-super-tiny-compiler.js   没注释的编译器, 读完有注释的�
 super-tiny-compiler.rb               编译器(Ruby)
 ```
 
+
+<br/>
+#### 后面不太重要可以不看
+
+
 <br/>
 #### token 是什么
-token 的英文意思: 
+token 的英文意思: <br/>
 A programming token is the basic component of source code . Character s are categorized as one of five classes of tokens that describe their functions (constants, identifiers, operators, reserved words, and separators) in accordance with the rules of the programming language.
 
 简单说就是源代码里的基础块(basic component), 不可继续分割
@@ -96,11 +101,11 @@ var a = 42;
 
 ```
 
-var 是一个 token
-a 是一个 token
-= 是一个 token
-42 是一个 token
-; 是一个 token
+var 是一个 token <br/>
+a 是一个 token <br/>
+= 是一个 token <br/>
+42 是一个 token <br/>
+; 是一个 token <br/>
 
 
 <br/>
@@ -118,16 +123,16 @@ module.exports 使得别的文件 require 本文件之后可以用这些函数,
 #### assert 是什么? (test.js)
 assert 是 Node.js 的内置模块，用于断言。如果表达式不符合预期，就抛出一个错误。
 
-test.js 里检验部分的第一行是这样写的:
+test.js 里检验部分的第一行是这样写的: <br/>
 assert.deepStrictEqual(tokenizer(input), tokens, 'Tokenizer should turn `input` string into `tokens` array');
 
-简单说:
-前两个参数是要检查的, 如果前两个不一样, 就会报错.
-第三个字符串参数是如果出错, 会输出的错误信息.
-第三个参数是可选的, 如果不给，默认输出出错的那一行代码
+简单说: <br/>
+前两个参数是要检查的, 如果前两个不一样, 就会报错. <br/>
+第三个字符串参数是如果出错, 会输出的错误信息. <br/>
+第三个参数是可选的, 如果不给，默认输出出错的那一行代码 <br/>
 
-assest 的文档（非常建议看）:
-https://nodejs.org/api/assert.html#assert_assert_deepstrictequal_actual_expected_message
+assest 的文档（非常建议看）: <br/>
+https://nodejs.org/api/assert.html#assert_assert_deepstrictequal_actual_expected_message <br/>
 
 
 <br/>
@@ -172,7 +177,7 @@ https://jsonformatter.curiousconcept.com/
  * ----------------------------------------------------------------------------
 ```
 整理后：Original AST  
-```json
+```
 {
    type:'Program',
    body:[
@@ -206,7 +211,7 @@ https://jsonformatter.curiousconcept.com/
 ```
 
 整理后：Transformed AST
-```json
+```
 
 {
    type:'Program',
@@ -246,7 +251,7 @@ https://jsonformatter.curiousconcept.com/
       ]
    }
    
-'''
+```
 
 
 ```
