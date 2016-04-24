@@ -11,7 +11,7 @@ var input  = '(add 2 (subtract 4 2))';
 var output = 'add(2, subtract(4, 2));';
 
 var tokens = [
-  { type: 'paren',  value: '('        },
+  { type: 'paren',  value: '('        },  // paren 意思是括弧（parenthesis）
   { type: 'name',   value: 'add'      },
   { type: 'number', value: '2'        },
   { type: 'paren',  value: '('        },
@@ -22,7 +22,7 @@ var tokens = [
   { type: 'paren',  value: ')'        }
 ];
 
-var ast = {
+var ast = {       // Abstract Syntax Tree = AST = 抽象语法树
   type: 'Program',
   body: [{
     type: 'CallExpression',
@@ -82,3 +82,17 @@ assert.deepStrictEqual(codeGenerator(newAst), output, 'Code Generator should tur
 assert.deepStrictEqual(compiler(input), output, 'Compiler should turn `input` into `output`');
 
 console.log('All Passed!');
+
+// console.log 之前的那 5 行 assert.deepStrictEqual 是关键
+// 
+// 这整个文件就是把编译器的各个部分用手写方式检验是否正确.
+// 先人类分析什么是正确结果, 然后手写出来, 然后把程序输出的比对一下
+// tokenizer
+// parser
+// transformer
+// codeGenerator
+// compiler
+// 全都是手工提前写好正确的结果, 然后拿程序的输出检验
+// 还检验了整个编译器编译后的结果是否正确(也是用手写方式, 看上面的 input 和 output 变量)
+
+
