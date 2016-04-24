@@ -1,4 +1,5 @@
-##### 超小编译器 (原作者: James Kyle, 译者: Github@1c7)
+## 超小编译器 
+##### (原作者: James Kyle, 译者: Github@1c7)
 ##### 中文注释在最下面, 最上面这里我保留了原作者的英文说明.
 <a href="super-tiny-compiler.js"><img width="731" alt="THE SUPER TINY COMPILER" src="https://cloud.githubusercontent.com/assets/952783/14171276/ed7bf716-f6e6-11e5-96df-80a031c2769d.png"/></a>
 
@@ -49,31 +50,43 @@ Run with `node test.js`
 
 
 <br/>
+
 ---
 
 
 ### 首先
-这里用的语言是 Node.js    你必须对 Node.js 有基础的了解.
+这个编译器用的语言是 Node.js <br/>
+编译器能把 ``` (add 2 (substract 4 2)) ``` 编译成 ``` add(2, subtract(4, 2)); ``` <br/>
+
+
+#### 建议
 当前(2016年4月)的 Node.js 版本是 5.10.1 如果你的版本还是旧的 0.10 记得升级, 不然运行不了.
 
-建议看 https://www.youtube.com/watch?v=Tar4WgAfMr4 (Youtube 原视频)
-作者放 代码 PPT 的时候是没注释, 口述的, 结构会更清晰一些.
-不过讲代码的口述内容和代码里的英文注释基本一样.
-视频前半部分讲(00:00~00:00)
-视频后半部分讲(
+建议看 https://www.youtube.com/watch?v=Tar4WgAfMr4 (Youtube 原视频) <br/>
+作者放 代码 PPT 的时候是没注释的, 然后一遍口述, 结构会更清晰一些. <br/>
+不过讲代码的口述内容和代码里的英文注释基本一样. <br/>
+<br/>
 
-如果你对翻译有任何改进意见可以直接开 issue(比较省事) 或者是 fork 下来自己改, 然后 pull request.
+如果你对翻译有任何改进意见可以直接开 issue(比较省事) 或者是 fork 下来自己改, 然后 pull request. <br/>
 
+<br/>
+### 怎么学
+1  直接打开 super-tiny-compiler.js 看代码和详细的注释即可
+2  看完 NodeJS 版本应该就差不多了, 想看看 Python 的可以看: 
+https://github.com/josegomezr/the-super-tiny-compiler
+3  想看 Ruby 版的可以看
 
-### 怎么学 各个文件
+文件说明: 
 
 ```
-super-tiny-compiler.js               是编译器
-test.js                              是测试编译器的代码, 提前手写了正确的结果, 再和程序输出的比对.
+super-tiny-compiler.js               编译器(NodeJS)
+test.js                              是测编译器的代码, 提前手写了正确的结果, 再和程序输出的比对.
 no-comments-super-tiny-compiler.js   没注释的编译器, 读完有注释的版本后可以看下这个
+super-tiny-compiler.rb               编译器(Ruby)
 ```
 
-### token 是什么
+<br/>
+#### token 是什么
 token 的英文意思: 
 A programming token is the basic component of source code . Character s are categorized as one of five classes of tokens that describe their functions (constants, identifiers, operators, reserved words, and separators) in accordance with the rules of the programming language.
 
@@ -90,16 +103,19 @@ a 是一个 token
 ; 是一个 token
 
 
-##### 用到了啥数据结构? 
+<br/>
+#### 用到了啥数据结构? 
 编译器里用到了树, 以及树的遍历
 
 
-##### module.exports 是什么? (super-tiny-compiler.js)
+<br/>
+#### module.exports 是什么? (super-tiny-compiler.js)
 module.exports 使得别的文件 require 本文件之后可以用这些函数,
 如果不写就拿不到, 会报错.
 
 
-##### assert 是什么? (test.js)
+<br/>
+#### assert 是什么? (test.js)
 assert 是 Node.js 的内置模块，用于断言。如果表达式不符合预期，就抛出一个错误。
 
 test.js 里检验部分的第一行是这样写的:
@@ -114,11 +130,11 @@ assest 的文档（非常建议看）:
 https://nodejs.org/api/assert.html#assert_assert_deepstrictequal_actual_expected_message
 
 
-
-### 文档里有一段注释 AST 结构的看不大清楚，我重新复制下
+<br/>
+#### 文档里有一段注释 AST 结构的看不大清楚，我重新复制下
 建议弄到 json formatter 里弄成可以折叠的，这样看的更清楚
 https://jsonformatter.curiousconcept.com/
-
+```
 原文:
  * ----------------------------------------------------------------------------
  *   Original AST                     |   Transformed AST
@@ -154,7 +170,7 @@ https://jsonformatter.curiousconcept.com/
  *                                    |     }]
  *                                    |   }
  * ----------------------------------------------------------------------------
-
+```
 整理后：Original AST  
 ```json
 {
@@ -233,9 +249,7 @@ https://jsonformatter.curiousconcept.com/
 '''
 
 
-
-
-
+```
 总结下区别，因为我看了半天..
 
 token 有几种类型: paren name number
@@ -257,8 +271,7 @@ callee:{
    name:'subtract'
 },
 
-
-
+```
 
 
 

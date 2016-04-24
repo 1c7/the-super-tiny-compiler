@@ -1,18 +1,22 @@
-# ruby version 2.2
+# Ruby version 2.2
+# Author: Github@1c7
+
 # 这个版本纯属练手，因为看了 NodeJS 和 Python 
 # 总觉得 Transformer 部分的 _context 没懂，想换个语言写写看会不会好一点
-# 
-# Ruby 版本由于函数套函数里面参数拿不到，我把 NodeJS 版本的结构稍微改了一下
-# 用了 Proc 什么的，折腾了半天语法，满烦人的，建议去看 Python 版的
+# 然后折腾了一下终于理解了
+
+# 另外
+# 由于 Ruby 里函数套函数的话, 再里面哪个函数会拿不到外面的参数，于是我稍微小改了一下结构
+# 用了 Proc 
+# 建议去看 Python 版的，那个我感觉比我写的 Ruby 会更好理解
+
 input_program = "(add 2 (substract 4 2))"
 #input_program = "(add 52 3)(subtract 3 4)"
-
-
 
 =begin
  * ============================================================================
  *                               ヾ（〃＾∇＾）ﾉ♪
- *                                   tokenizer
+ *                                tokenizer
  * ============================================================================
 =end
 def tokenizer(input_program)
@@ -300,24 +304,13 @@ newAST = transformer(ast)
 }
 =end
 
-=begin
-    newAst = {
-        'type': 'Program',
-        'body': []
-    }
-ast["acontext"] = []
-ast[:context] = []
-puts(ast)
-=end
-
 
 =begin
  * ============================================================================
  *                               ヾ（〃＾∇＾）ﾉ♪
  *                               codeGenerator
  * ============================================================================
- 遍历节点，然后生成代码
- 
+ 遍历节点，生成代码
 =end
 def codeGenerator(node)
     type = node[:type]
@@ -370,8 +363,9 @@ end
 #puts compiler(input_program) # add(2,substract(4,2));
 
 =begin
+输入输出例子
 
-[Example 1]
+例子1
 
     a = "(add 2 (substract 4 2))"
     compiler(a)
@@ -380,7 +374,7 @@ end
 
 
 
-[Example 2]
+例子2
 
     b = "(add 52 3)(subtract 3 4)"
     compiler(b)
@@ -393,12 +387,7 @@ end
 
 
 
-
-
-
-
-
-# ======= 编译器部分结束，后面是为了帮助理解写的一些代码 ========
+# ======= 编译器部分结束，后面是为了帮助理解写的一些代码, 可以不看 ========
 
 =begin
  * ============================================================================
