@@ -78,10 +78,13 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 1  直接打开 super-tiny-compiler.js 看代码和详细的注释即可 <br/>
 看完再继续看 test.js 这个是测试 super-tiny-compiler.js 里写的编译器,  <br/>
 因为  super-tiny-compiler.js 里面就只有编译器, 没有测试案例 <br/>
+
 2  看完 NodeJS 版本应该就差不多了, 觉得没理解想换种语言看看的, 可以看 Python 版的: 
 https://github.com/josegomezr/the-super-tiny-compiler <br/>
+
 3  想看 Ruby 版的可以看 super-tiny-compiler.rb <br/>
 
+<br/>
 文件说明: 
 
 ```
