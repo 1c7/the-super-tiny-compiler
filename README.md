@@ -1,6 +1,7 @@
 ## 超小编译器 
 ##### (原作者: James Kyle, 译者: Github@1c7)
 ##### 中文注释在最下面, 上面这里我保留了原作者的英文说明.
+<br/>
 
 ---
 
@@ -79,10 +80,10 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 
 <br/>
 #### 3. 怎么学
-这里只有2个最重要的文件 <br/><br/>
+这里只有2个最重要的文件 <br/>
 
 ```super-tiny-compiler.js``` 是编译器 <br/>
-```test.js``` 是测试 ```super-tiny-compiler.js``` 这个编译器 <br/>
+```test.js``` 是测试 ```super-tiny-compiler.js``` 这个编译器 <br/><br/>
 
 
 1. 先跑一遍 ```nodejs test.js``` 看下结果
