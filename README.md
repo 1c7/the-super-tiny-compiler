@@ -100,6 +100,8 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 
 4.  (Ruby 版)想看 Ruby 版的可以看 [super_tiny_compiler.rb](super_tiny_compiler.rb) <br/>
 
+5. (Go 版) https://github.com/hazbo/the-super-tiny-compiler <br/>
+
 <br/>
 文件说明: 
 
