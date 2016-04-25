@@ -60,11 +60,14 @@ Run with `node test.js`
 3. 关于翻译风格: 你来看编译器的代码必然是希望理解整个编译器是怎么跑的, 所以我的翻译也是朝着这个目标,
 所以我不会完完全全忠实原文翻译, 因为我发现个别地方, 忠实原文翻译出来会比较难理解.
 
+<br/>
 #### 2. 建议
 1. 当前(2016年4月)的 Node.js 版本是 5.10.1 如果你的版本还是旧的 0.10 记得升级, 不然运行不了.
 
-2. 强烈建议看英文原视频(Youtube): https://www.youtube.com/watch?v=Tar4WgAfMr4 <br/>
-作者放 PPT 时是没代码注释的, 然后口述, 结构会更清晰一些. <br/>
+2. 如果你英文还行的话, 强烈建议看英文原视频(Youtube): https://www.youtube.com/watch?v=Tar4WgAfMr4 <br/>
+哪怕英文不行, 看原视频里作者放 PPT 时也可以帮助理解, PPT 里没代码注释.  <br/>
+纯代码, 有代码高亮, 作者每次高亮几行然后讲解, 结构会更清晰一些. <br/>
+ <br/>
 super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 但另一方面代码被太多注释隔开, 脑子里掌握不了代码的整体结构<br/>
 不过口述内容和代码里的英文注释基本一样. <br/>
@@ -75,14 +78,15 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 
 <br/>
 #### 3. 怎么学
-1.  直接打开 ```super-tiny-compiler.js``` 看代码和详细的注释即可 <br/>
-看完再继续看 ```test.js``` 这个是测试 ```super-tiny-compiler.js``` 里写的编译器,  <br/>
+1.  直接打开 ```super-tiny-compiler.js``` 看代码和注释即可 <br/>
+看完再继续看 ```test.js```, <br/>
+这个是测试 ```super-tiny-compiler.js``` 里写的编译器,  <br/>
 因为  ```super-tiny-compiler.js``` 里面就只有编译器, 没有测试案例 <br/>
 
-2.  (Python 版)看完 NodeJS 版本应该就差不多了, 觉得没理解想换种语言看看的, 可以看 Python 版的: 
-https://github.com/josegomezr/the-super-tiny-compiler <br/>
+2.  (Python 版)看完 NodeJS 版本应该就差不多了, 觉得没理解想换种语言看看的, 
+<br/> 可以看 Python 版的: https://github.com/josegomezr/the-super-tiny-compiler <br/>
 
-3.  (Ruby 版)想看 Ruby 版的可以看 super-tiny-compiler.rb <br/>
+3.  (Ruby 版)想看 Ruby 版的可以看 [super-tiny-compiler.rb](super-tiny-compiler.rb) <br/>
 
 <br/>
 文件说明: 
@@ -104,7 +108,7 @@ super-tiny-compiler.rb               编译器(Ruby)
 ---
 
 <br/>
-#### token 是什么
+#### 1. token 是什么
 token 的英文意思: <br/>
 A programming token is the basic component of source code . Character s are categorized as one of five classes of tokens that describe their functions (constants, identifiers, operators, reserved words, and separators) in accordance with the rules of the programming language.
 
@@ -122,22 +126,25 @@ a 是一个 token <br/>
 
 
 <br/>
-#### 用到了啥数据结构? 
+#### 2. 用到了啥数据结构? 
 编译器里用到了树, 以及树的遍历
 
 
 <br/>
-#### module.exports 是什么? (super-tiny-compiler.js)
+#### 3. module.exports 是什么? (super-tiny-compiler.js)
 module.exports 使得别的文件 require 本文件之后可以用这些函数,
 如果不写就拿不到, 会报错.
 
 
 <br/>
-#### assert 是什么? (test.js)
+#### 4. assert 是什么? (test.js)
 assert 是 Node.js 的内置模块，用于断言。如果表达式不符合预期，就抛出一个错误。
 
 test.js 里检验部分的第一行是这样写的: <br/>
+
+```javascript
 assert.deepStrictEqual(tokenizer(input), tokens, 'Tokenizer should turn `input` string into `tokens` array');
+```
 
 简单说: <br/>
 前两个参数是要检查的, 如果前两个不一样, 就会报错. <br/>
@@ -149,7 +156,7 @@ https://nodejs.org/api/assert.html#assert_assert_deepstrictequal_actual_expected
 
 
 <br/>
-#### 文档里有一段注释 AST 结构的看不大清楚，我重新复制下
+#### 5. 文档里有一段注释 AST 结构的看不大清楚，我重新复制下
 建议弄到 json formatter 里弄成可以折叠的，这样看的更清楚
 https://jsonformatter.curiousconcept.com/
 ```
