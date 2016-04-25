@@ -1,7 +1,6 @@
 ## 超小编译器 
 ##### (原作者: James Kyle, 译者: Github@1c7)
-##### 中文注释在最下面, 最上面这里我保留了原作者的英文说明.
-<a href="super-tiny-compiler.js"><img width="731" alt="THE SUPER TINY COMPILER" src="https://cloud.githubusercontent.com/assets/952783/14171276/ed7bf716-f6e6-11e5-96df-80a031c2769d.png"/></a>
+##### 中文注释在最下面, 上面这里我保留了原作者的英文说明.
 
 ***Welcome to The Super Tiny Compiler!***
 
