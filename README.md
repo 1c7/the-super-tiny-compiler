@@ -76,7 +76,9 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 <br/>
 #### 3. 怎么学
 1  直接打开 super-tiny-compiler.js 看代码和详细的注释即可 <br/>
-2  看完 NodeJS 版本应该就差不多了, 想看 Python 版的可以看: 
+看完再继续看 test.js 这个是测试 super-tiny-compiler.js 里写的编译器,  <br/>
+因为  super-tiny-compiler.js 里面就只有编译器, 没有测试案例 <br/>
+2  看完 NodeJS 版本应该就差不多了, 觉得没理解想换种语言看看的, 可以看 Python 版的: 
 https://github.com/josegomezr/the-super-tiny-compiler <br/>
 3  想看 Ruby 版的可以看 super-tiny-compiler.rb <br/>
 
@@ -84,14 +86,17 @@ https://github.com/josegomezr/the-super-tiny-compiler <br/>
 
 ```
 super-tiny-compiler.js               编译器(NodeJS)
+
 test.js                              是测编译器的代码, 提前手写了正确的结果, 再和程序输出的比对.
+
 no-comments-super-tiny-compiler.js   没注释的编译器, 读完有注释的版本后可以看下这个
+
 super-tiny-compiler.rb               编译器(Ruby)
 ```
 
-
 <br/>
-#### 后面不太重要可以不看
+<br/>
+### 后面不太重要可以不看
 
 ---
 
