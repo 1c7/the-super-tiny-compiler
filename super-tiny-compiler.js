@@ -135,11 +135,13 @@
  *
  * Parsing typically gets broken down into two phases: Lexical Analysis and
  * Syntactic Analysis.
-   分析这个阶段一般分成2个大块: 语法分析 和 语义分析
+   分析这个阶段一般分成2个大块: 
+     1. 语法分析(Lexical Analysis) 
+     2. 语义分析(Syntactic Analysis)
  *
  * 1. *Lexical Analysis* takes the raw code and splits it apart into these things
  *    called tokens by a thing called a tokenizer (or lexer).
-   1. *语法分析* 把源代码切成一块一块叫做 token 的东西, 完成这件事情的程序叫做 tokenizer(或者lexer)
+   1. *语法分析* 把源代码切成一块一块叫 token 的东西, 完成这件事情的程序叫做 tokenizer(或者lexer)
  *
  *    Tokens are an array of tiny little objects that describe an isolated piece
  *    of the syntax. They could be numbers, labels, punctuation, operators,
@@ -161,12 +163,12 @@
       这种表示代码的方式既容易处理, 也告诉了我们很多信息
  *
  * For the following syntax:
-   对于以下的语法
+   对于下面的代码
    
  *   (add 2 (subtract 4 2))
  *
  * Tokens might look something like this:
-   源代码变成 tokens 后: 可以看到根据先后顺序把 类型 和 值 都判断出来了.
+   变成 token 数组后: 可以看到根据先后顺序把 类型 和 值 都判断出来了.
  * 
  *   [
  *     { type: 'paren',  value: '('        },
@@ -181,7 +183,7 @@
  *   ]
  *
  * And an Abstract Syntax Tree (AST) might look like this:
-   token 变成 AST 后:
+   token 数组变成 AST 后:
  *
  *   {
  *     type: 'Program',
@@ -214,21 +216,21 @@
  * takes the AST from the last step and makes changes to it. It can manipulate
  * the AST in the same language or it can translate it into an entirely new
  * language.
-   AST 下一个步骤是变形. 
+   生成 AST 后, 下一步是变形
  *
  * Let’s look at how we would transform an AST.
-   接下来看看具体怎么把 AST 变形
+   接下来看看具体怎么变形 AST 
  *
  * You might notice that our AST has elements within it that look very similar.
  * There are these objects with a type property. Each of these are known as an
  * AST Node. These nodes have defined properties on them that describe one
  * isolated part of the tree.
-   你可能注意到了我们的 AST 里面的东西看起来蛮眼熟的, 和 token 一样有个 type 属性.
-   AST 里每一个都叫做 Node(节点). 
-   
+   你可能注意到了 AST 看起来蛮眼熟的, AST 里每一个都叫做 Node(节点).
+   和 token 一样有个 type 属性.
+     
  *
  * We can have a node for a "NumberLiteral":
-   表示数字的节点
+   我们用类型为 NumberLiteral (数字字面量) 的节点来表示数字
  *
  *   {
  *     type: 'NumberLiteral',
@@ -248,12 +250,12 @@
  * adding/removing/replacing properties, we can add new nodes, remove nodes, or
  * we could leave the existing AST alone and create an entirely new one based
  * on it.
-   变形 AST 的时候我们可以给节点 添加/删除/替换 属性, 也可以添加节点, 删除节点。
-   或者是基于 AST 的信息，自己弄个全新的 AST，而不是去修改它
+   变形 AST 时我们可以给节点 添加/删除/替换 属性, 也可以添加节点, 删除节点。
+   或是基于 AST 的信息，弄个全新的 AST，而不是去修改原来的 AST 
  *
  * Since we’re targeting a new language, we’re going to focus on creating an
  * entirely new AST that is specific to the target language.
-   因为我们要编译成其他语言, 所以我们这里要创建一个用于目标语言的新 AST 
+   因为我们要编译成其他语言, 所以这里我们就新建一个用于目标语言的新 AST 
  *
  * Traversal 遍历
  * ---------
@@ -295,23 +297,25 @@
  *   5. NumberLiteral (4) - Moving to the first element of CallExpression's params
  *   6. NumberLiteral (2) - Moving to the second element of CallExpression's params
  *
+   简单说就是  add 2 subtract 4 2 这么按顺序访问
+   
  * If we were manipulating this AST directly, instead of creating a separate AST,
  * we would likely introduce all sorts of abstractions here. But just visiting
  * each node in the tree is enough.
-   如果我们要直接修改这个 AST， 而不是创建一个新 AST,
-   逻辑就更复杂一些, 可能要多写些代码, 我们我们这里访问各个节点就好. 
+   如果我们要直接改这个 AST， 而不是创建一个新 AST,
+   逻辑可能需要写的更复杂一些, 可能要多写些代码, 所以这里访问各个节点就好. 
  
  * The reason I use the word “visiting” is because there is this pattern of how
  * to represent operations on elements of an object structure.
-   我用 "访问"(visiting) 这个词的原因是.. 怎么翻？。。。
+   
  *
- * Visitors
+ * Visitors  访问者
  * --------
  *
  * The basic idea here is that we are going to create a “visitor” object that
  * has methods that will accept different node types.
    我们会创建一个"访问者"(visitor)对象
-   有方法去接收不同节点类型
+   它有方法去接收不同节点类型
  *
  *   var visitor = {
  *     NumberLiteral() {},
@@ -320,10 +324,11 @@
  *
  * When we traverse our AST we will call the methods on this visitor whenever we
  * encounter a node of a matching type.
-   当 Vistior 遍历 AST 的时候碰到不同节点会调用不同方法
+   当遍历 AST 时, Vistior 碰到不同节点会调用不同方法
  *
  * In order to make this useful we will also pass the node and a reference to
  * the parent node.
+   为了方便创建新 AST, 我们把节点和父节点都传递过去
    
  *
  *   var visitor = {
@@ -339,8 +344,8 @@
  * The final phase of a compiler is code generation. Sometimes compilers will do
  * things that overlap with transformation, but for the most part code
  * generation just means take our AST and string-ify code back out.
-   最后一个阶段是代码生成. 有时候编译器会把"代码生成"这一步和"变形"混合着一起做.
-   代码生成 意思是把 AST 变成目标语言字符串
+   最后一个阶段是代码生成. 有时编译器会把"代码生成"这一步和"变形"混合着一起做.
+   代码生成 就是把 AST 变成目标语言字符串
  *
  * Code generators work several different ways, some compilers will reuse the
  * tokens from earlier, others will have created a separate representation of
@@ -353,7 +358,7 @@
  * Effectively our code generator will know how to “print” all of the different
  * node types of the AST, and it will recursively call itself to print nested
  * nodes until everything is printed into one long string of code.
-   我们的代码生成器直到怎么"输出" AST 里的不同节点,并且它会递归调用自己.
+   我们的代码生成器知道怎么正确输出 AST 里的不同节点,并且它会递归调用自己.
    直到所有节点都输出完.
  */
 
@@ -364,8 +369,8 @@
  * Now that isn’t to say every compiler looks exactly like I described here.
  * Compilers serve many different purposes, and they might need more steps than
  * I have detailed.
-   注意不是每个编译器都和这里长得完全一样.
-   编译器可以用来做很多事情, 有些事情需要额外的步骤去实现.
+   注意不是每个编译器都和这里说的长得完全一样.
+   编译器可以用来做很多事情, 有些事需要额外的步骤去实现.
  *
  * But now you should have a general high-level idea of what most compilers look
  * like.
@@ -392,11 +397,11 @@
 /**
  * We're gonna start off with our first phase of parsing, lexical analysis, with
  * the tokenizer.
-   我们要开始分析的第一个阶段, 用 tokenizer 做语法分析
+   我们要开始分析(parsing)的第一个阶段, 语法分析, 做这个事情的函数我们叫它 tokenizer
  *
  * We're just going to take our string of code and break it down into an array
  * of tokens.
-   我们会把源代码(如下), 拆解成一个 token 数组
+   我们会把如下代码, 拆成一个 token 数组
  *
  *   (add 2 (subtract 4 2))   =>   [{ type: 'paren', value: '(' }, ...]
  */
@@ -411,7 +416,7 @@ function tokenizer(input) {
   var current = 0;
 
   // And a `tokens` array for pushing our tokens to.
-  // `tokens` 数组用于存所有的 token
+  // `tokens` 数组用于存所有的 token，待会我们会把 token 一个个 push 进去
   var tokens = [];
 
   // We start by creating a `while` loop where we are setting up our `current`
@@ -495,7 +500,7 @@ function tokenizer(input) {
     //        Only two separate tokens
     //
     // So we start this off when we encounter the first number in a sequence.
-    // 数字可以是任意长度, 比如 123(3位)  88990(5位)
+    // 下一种要处理的 token 是数字,  数字可以是任意长度, 比如 123(3位)  88990(5位)
     // 所以一旦碰到数字, 就看看下一个是不是数字, 如果是就把手指也移过去, 直到碰到不是数字的才停
     // 这样就拿到了一整串数字
     var NUMBERS = /[0-9]/;
@@ -536,7 +541,7 @@ function tokenizer(input) {
     //    Name token
     //
     // 最后这种 token 类型是 name(名字)
-    // 处理的逻辑和数字一样, 也是正则表示式匹配
+    // 逻辑和数字一样, 也是正则匹配
     var LETTERS = /[a-z]/i;
     if (LETTERS.test(char)) {
       var value = '';
@@ -565,7 +570,7 @@ function tokenizer(input) {
   }
 
   // Then at the end of our `tokenizer` we simply return the tokens array.
-  // 最后我们把 token 数组返回
+  // 最后把 token 数组返回
   return tokens;
 }
 
@@ -582,11 +587,11 @@ function tokenizer(input) {
  *
  *   [{ type: 'paren', value: '(' }, ...]   =>   { type: 'Program', body: [...] }
  * 
- * 这一步, 我们要把 tokens 数组转换成 AST (Abstract Syntax Tree) 抽象语法树
+ * 这一步, 我们要把 token 数组转换成 AST (Abstract Syntax Tree) 抽象语法树
  */
 
 // Okay, so we define a `parser` function that accepts our array of `tokens`.
-// 接收 tokens 参数(数组类型)
+// 接收 token 数组参数
 function parser(tokens) {
 
   // Again we keep a `current` variable that we will use as a cursor.
@@ -616,7 +621,7 @@ function parser(tokens) {
 
       // And we'll return a new AST node called `NumberLiteral` and setting its
       // value to the value of our token.
-      // 把这个 token 变成 node (这个数字 node 和原先的数字 token 其实没啥区别, 就是 type 不一样了)
+      // 把这个 token 变成 node (对于数字, 这个 node 和原先的 token 其实没啥区别, 就是 type 不一样了)
       return {
         type: 'NumberLiteral',
         value: token.value
@@ -722,31 +727,30 @@ function parser(tokens) {
 
     // Again, if we haven't recognized the token type by now we're going to
     // throw an error.
-    // 同样, 如果认不出 token 类型就报错.
+    // 同样, 认不出 token 类型就报错
     throw new TypeError(token.type);
   }// walk 函数结束
 
   // Now, we're going to create our AST which will have a root which is a
   // `Program` node.
-  // 现在我们要根据 tokens 数组创建 AST， AST 根节点类型是 "Program" 代表我们的整个程序
+  // 现在根据 token 数组创建 AST， AST 根节点类型是 "Program" 代表我们的整个程序
   var ast = {
     type: 'Program',
     body: []
-  };;
+  };
 
   // And we're going to kickstart our `walk` function, pushing nodes to our
   // `ast.body` array.
   //
-  // 现在我们要用前面定义的 walk 函数了, 把节点 push 到 
+  // 现在我们要调用前面定义的 walk 函数, 把节点 push 到 
   // ast.body 这个数组里
   // 
   // The reason we are doing this inside a loop is because our program can have
   // `CallExpressions` after one another instead of being nested.
   //
-  // 这里用 while 循环, 是因为我们的程序可以多个 CallExpressions 并排, 不是一定要嵌套
+  // 这里用 while 循环, 是因为我们的程序可以多个 CallExpressions 并排, 不一定要嵌套
   //
-  //   (add 2 2)
-  //   (subtract 4 2)
+  //   (add 2 2)(subtract 4 2)
   while (current < tokens.length) {
     ast.body.push(walk());
   }
@@ -764,11 +768,30 @@ function parser(tokens) {
  */
 
 /**
+  译者注:
+    注意这里有点不一样了,
+    前面  tokenizer 和 parser 都是单个函数就搞定
+    
+    这里是 traverser + transformer 搭配用, 2 个函数
+    traverser 里又有2个函数, 分别是 traverseArray 和 traverseNode
+    
+    def traverser()
+        def traverseArray()     # 定义函数
+        def traverseNode()      # 定义函数
+            traverseNode(a,b)   # 调函数
+    
+    def transformer()
+        traverser(ast, visitor) # 调函数
+        
+    总体结构如上, 因为这个部分我看了半天没懂(主要是_context那里没懂, 后来弄懂了)
+    这里整理下清晰些
+        
+
  * So now we have our AST, and we want to be able to visit different nodes with
  * a visitor. We need to be able to call the methods on the visitor whenever we
  * encounter a node with a matching type.
  * 
- * 现在我们有 AST 了, 我们现在需要用 visitor 访问 AST 里的各个节点
+ * 现在我们有 AST 了, 我们需要用 visitor 访问 AST 里的各个节点
  * 然后根据节点的不同类型, 调用 visitor 的不同方法(从而创建新 AST)
  *
  *   traverse(ast, {
@@ -794,6 +817,7 @@ function traverser(ast, visitor) {
   // A `traverseArray` function that will allow us to iterate over an array and
   // call the next function that we will define: `traverseNode`.
   // `traverseArray` 遍历数组, 并且对数组每个元素调用 traverseNode 这个函数
+  // 访问顺序是 add, 2, subtract, 4, 2
   function traverseArray(array, parent) {
     array.forEach(function(child) {
       traverseNode(child, parent);
@@ -808,17 +832,14 @@ function traverser(ast, visitor) {
 
     // We start by testing for the existence of a method on the visitor with a
     // matching `type`.
-    // 看看 visitor 对这个节点的类型是否有处理方法.
+    // 这部分根据节点类型, 执行 visitor 里对应方法
     var method = visitor[node.type];
-
-    // If it exists we'll call it with the `node` and its `parent`.
-    // 如果有就执行
     if (method) {
       method(node, parent);
     }
 
     // Next we are going to split things up by the current node type.
-    // 根据节点类型, 决定怎么处理
+    // 这部分取属性继续遍历
     switch (node.type) {
 
       // We'll start with our top level `Program`. Since Program nodes have a
@@ -828,27 +849,30 @@ function traverser(ast, visitor) {
       // (Remember that `traverseArray` will in turn call `traverseNode` so  we
       // are causing the tree to be traversed recursively)
       //
-      // 我们从顶层节点 Program 类型开始
-      // 因为 Program 节点有个属性叫 body, 然后里面是节点的数组
+      // 我们从顶层节点, `Program` 开始.
+      // 这个节点的 body 属性里是节点数组
+      // 我们用 traverseArray 来遍历这个节点数组
+      //
+      // (记住 traverseArray 又会调用 traverseNode, 使得我们可以递归访问一整棵树)
       case 'Program':
         traverseArray(node.body, node);
         break;
 
       // Next we do the same with `CallExpressions` and traverse their `params`.
-      // 如果节点是 CallExpressions 就 traverse 这个节点的 params
+      // 如果节点是 CallExpressions 就 traverseArray 这个节点的 params
       case 'CallExpression':
         traverseArray(node.params, node);
         break;
 
       // In the case of `NumberLiterals` we don't have any child nodes to visit,
       // so we'll just break.
-      // 如果是数字, 那就没有子节点要访问的, 所以直接 break;
+      // 如果是数字, 那就没有子节点要访问, 所以直接 break;
       case 'NumberLiteral':
         break;
 
       // And again, if we haven't recognized the node type then we'll throw an
       // error.
-      // 如果认不出节点的类型就报错
+      // 如果认不出节点类型就报错
       default:
         throw new TypeError(node.type);
     }
@@ -871,9 +895,14 @@ function traverser(ast, visitor) {
  * Next up, the transformer. Our transformer is going to take the AST that we
  * have built and pass it to our traverser function with a visitor and will
  * create a new ast.
-   接下来， transformer.  
-   我们的 transformer 会把 AST 和 visitor 传给 traverser
-   visitor 会创建个新的 AST
+   接下来， transformer. 
+   transformer 的用途就是变换 AST 结构
+   
+   我们会在 transformer 里定义个 visitor, visitor 碰到不同节点会调不同的方法
+   
+   transformer 把 AST 和 visitor 传给 traverser
+   通过遍历所有节点(traverser负责遍历和看节点类型)，并且根据不同节点调用不同方法(visitor负责提供方法)
+   最后我们会得到新的 AST
  *
  * ----------------------------------------------------------------------------
  *   Original AST                     |   Transformed AST
@@ -917,7 +946,7 @@ function transformer(ast) {
 
   // We'll create a `newAst` which like our previous AST will have a program
   // node.
-  // 新的 AST，和我们之前的一样也会有个根节点叫做 Program
+  // 新的 AST 和之前的 老 AST 一样也有个根节点叫 Program
   var newAst = {
     type: 'Program',
     body: []
@@ -931,12 +960,14 @@ function transformer(ast) {
   //
   // Just take note that the context is a reference *from* the old ast *to* the
   // new ast.
-  // 旧 AST 的 _context 指向了 新 AST 的 body
-  // 就是说你往 _context 里面 push 和 push 到 body 是一回事
+  // 这行代码使得 旧 AST 的 _context 指向了 新 AST 的 body
+  // 就是说你往 旧 AST 的 _context 里面 push 
+  // 和 push 到 新 AST 的 body 是一回事
+  // 这么写的话就方便些
   ast._context = newAst.body;
 
   // We'll start by calling the traverser function with our ast and a visitor.
-  // 调用traverser, 第一个参数 ast 没啥说的, 第二个参数是 visitor
+  // 调 traverser, 第一个参数 ast 没啥说的, 第二个参数是 visitor
   traverser(ast, {
 
     // The first visitor method accepts `NumberLiterals`
@@ -944,7 +975,9 @@ function transformer(ast) {
     NumberLiteral: function(node, parent) {
       // We'll create a new node also named `NumberLiteral` that we will push to
       // the parent context.
-      // 这样 NumberLiteral 就会进上级 CallExp 的 arguments 里了
+      // 首先对于数字节点, parent 总是 CallExpression 这点先明确了.
+      // 然后
+      // 这里创建了个新节点, 然后 parent._haha.push 就会进上级 CallExpression 的 arguments 里了
       // 之所以管用请看下面 CallExpression 写了 node._haha = expression.arguments;
       parent._haha.push({
         type: 'NumberLiteral',
@@ -958,7 +991,9 @@ function transformer(ast) {
 
       // We start creating a new node `CallExpression` with a nested
       // `Identifier`.
-      // 创建个新节点 把 name 先包一下
+      // 创建个新节点, 把 name 先包一下.
+      // 之前的 CallExpressions 就是 type,name,params 三个属性
+      // 现在先把 name 包一层同时给个类型(Identifier), 然后 arguments 其实就是 params (含义一样,我不是说指向)
       var expression = {
         type: 'CallExpression',
         callee: {
@@ -972,6 +1007,10 @@ function transformer(ast) {
       // `CallExpression` node that will reference the `expression`'s arguments
       // so that we can push arguments.
       // 注意这里是给 CallExpression 节点自己, 定义一个 _haha ，和 ast._context 是没有任何关系的
+      // 原作者这里写的是 node._context 很不便于理解. 所以这里是我改成 _haha 的, 避免混淆.
+      // 我这里混淆了之后就没能理解, 看着 travser 和 transformer 脑子扰不过来, 怎么都搞不清新 AST 的怎么创建好的
+      // 为啥只往旧 AST 里 push 就可以弄成那么复杂的树, 后来发现我理解错了, 这里的 _context 和上面的 ast._context 不是一回事
+      // 这里这么一写, 上面那个数字节点的 parent._haha.push 才能成功, 也就等于 push 到 arguments 里去了
       node._haha = expression.arguments;
 
       // Then we're going to check if the parent node is a `CallExpression`.
@@ -990,10 +1029,10 @@ function transformer(ast) {
         };
         
         parent._context.push(expression); // 如果是 add 就会调用到这里
-        // 结果就是 push 到 ast._context 里，从而就 push 到 newAST.body 里了
+        // 结果就是 push 到 ast._context 里，从而就 push 到 newAST.body 里
       } else {
         parent._haha.push(expression); // 如果是 subtract 就会调用到这里
-        // 那么正确的结果是挂载到上级 add 的 arguments 里, 那么这样一 push 就行了
+        // 结果就是挂载到上级 add 的 _haha 里, 从而 push 到上级 add 的 arguments 里
       }
 
 
@@ -1002,7 +1041,7 @@ function transformer(ast) {
 
   // At the end of our transformer function we'll return the new ast that we
   // just created.
-  // 变形完成了就返回新 AST 
+  // 变形完了就返回新 AST 
   return newAst;
 }
 
@@ -1031,7 +1070,7 @@ function codeGenerator(node) {
 
     // If we have a `Program` node. We will map through each node in the `body`
     // and run them through the code generator and join them with a newline.
-    // 对于并列语句如 (add 2 3)(subtract 4 5), 下面这种做法会导致换行, 变成
+    // 对于并列语句如 (add 2 3)(subtract 4 5), 下面 join('\n') 会导致换行, 变成
     // add(2,3);
     // subtract(4,5);
     case 'Program':

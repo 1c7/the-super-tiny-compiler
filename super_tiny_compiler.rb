@@ -6,9 +6,9 @@
 # 然后折腾了一下终于理解了
 
 # 另外
-# 由于 Ruby 里函数套函数的话, 再里面哪个函数会拿不到外面的参数，于是我稍微小改了一下结构
+# 由于 Ruby 里函数套函数的话, 再里面哪个函数会拿不到外面的参数，于是稍微小改了下结构
 # 用了 Proc 
-# 建议去看 Python 版的，那个我感觉比我写的 Ruby 会更好理解
+# 建议去看 Python 版的，我感觉比 Ruby 会更好理解
 
 input_program = "(add 2 (substract 4 2))"
 #input_program = "(add 52 3)(subtract 3 4)"

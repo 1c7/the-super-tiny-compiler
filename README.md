@@ -55,24 +55,28 @@ Run with `node test.js`
 
 
 ### 1. 首先
-这个编译器用的语言是 Node.js <br/>
-编译器能把 ``` (add 2 (substract 4 2)) ``` 编译成 ``` add(2, subtract(4, 2)); ``` <br/>
-
+1. 这个编译器用的语言是 Node.js <br/>
+2. 编译器能把 ``` (add 2 (substract 4 2)) ``` 编译成 ``` add(2, subtract(4, 2)); ``` <br/>
+3. 关于翻译风格: 你来看编译器的代码必然是希望理解整个编译器是怎么跑的, 所以我的翻译也是朝着这个目标,
+所以我不会完完全全忠实原文翻译, 因为我发现个别地方, 忠实原文翻译出来会比较难理解.
 
 #### 2. 建议
-当前(2016年4月)的 Node.js 版本是 5.10.1 如果你的版本还是旧的 0.10 记得升级, 不然运行不了.
+1. 当前(2016年4月)的 Node.js 版本是 5.10.1 如果你的版本还是旧的 0.10 记得升级, 不然运行不了.
 
-建议看 https://www.youtube.com/watch?v=Tar4WgAfMr4 (Youtube 原视频) <br/>
-作者放 代码 PPT 的时候是没注释的, 然后一遍口述, 结构会更清晰一些. <br/>
-不过讲代码的口述内容和代码里的英文注释基本一样. <br/>
+2. 强烈建议看英文原视频(Youtube): https://www.youtube.com/watch?v=Tar4WgAfMr4 <br/>
+作者放 PPT 时是没代码注释的, 然后口述, 结构会更清晰一些. <br/>
+super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
+但另一方面代码被太多注释隔开, 脑子里掌握不了代码的整体结构<br/>
+不过口述内容和代码里的英文注释基本一样. <br/>
+视频的前三分之一是介绍，后面就是代码带你走一遍<br/>
 <br/>
 
-如果你对翻译有任何改进意见可以直接开 issue(比较省事) 或者是 fork 下来自己改, 然后 pull request. <br/>
+如果对翻译有任何改进意见可以直接开 issue(比较省事) 或者是 fork 下来自己改, 然后 pull request. <br/>
 
 <br/>
 #### 3. 怎么学
 1  直接打开 super-tiny-compiler.js 看代码和详细的注释即可 <br/>
-2  看完 NodeJS 版本应该就差不多了, 想看看 Python 的可以看: 
+2  看完 NodeJS 版本应该就差不多了, 想看 Python 版的可以看: 
 https://github.com/josegomezr/the-super-tiny-compiler <br/>
 3  想看 Ruby 版的可以看 super-tiny-compiler.rb <br/>
 
@@ -89,6 +93,7 @@ super-tiny-compiler.rb               编译器(Ruby)
 <br/>
 #### 后面不太重要可以不看
 
+---
 
 <br/>
 #### token 是什么
