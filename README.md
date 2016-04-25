@@ -2,6 +2,8 @@
 ##### (原作者: James Kyle, 译者: Github@1c7)
 ##### 中文注释在最下面, 上面这里我保留了原作者的英文说明.
 
+---
+
 ***Welcome to The Super Tiny Compiler!***
 
 This is an ultra-simplified example of all the major pieces of a modern compiler
@@ -79,7 +81,8 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 #### 3. 怎么学
 1.  直接打开 ```super-tiny-compiler.js``` 看代码和注释即可 <br/>
 看完再继续看 ```test.js```, <br/>
-这个是测试 ```super-tiny-compiler.js``` 里写的编译器,  <br/>
+```test.js``` 是测试 ```super-tiny-compiler.js``` 里写的编译器,  <br/>
+运行方法 ```nodejs test.js``` // 只会输出 All Passed! 没啥惊人的
 因为  ```super-tiny-compiler.js``` 里面就只有编译器, 没有测试案例 <br/>
 
 2.  (Python 版)看完 NodeJS 版本应该就差不多了, 觉得没理解想换种语言看看的, 
@@ -123,39 +126,8 @@ a 是一个 token <br/>
 42 是一个 token <br/>
 ; 是一个 token <br/>
 
-
 <br/>
-#### 2. 用到了啥数据结构? 
-编译器里用到了树, 以及树的遍历
-
-
-<br/>
-#### 3. module.exports 是什么? (super-tiny-compiler.js)
-module.exports 使得别的文件 require 本文件之后可以用这些函数,
-如果不写就拿不到, 会报错.
-
-
-<br/>
-#### 4. assert 是什么? (test.js)
-assert 是 Node.js 的内置模块，用于断言。如果表达式不符合预期，就抛出一个错误。
-
-test.js 里检验部分的第一行是这样写的: <br/>
-
-```javascript
-assert.deepStrictEqual(tokenizer(input), tokens, 'Tokenizer should turn `input` string into `tokens` array');
-```
-
-简单说: <br/>
-前两个参数是要检查的, 如果前两个不一样, 就会报错. <br/>
-第三个字符串参数是如果出错, 会输出的错误信息. <br/>
-第三个参数是可选的, 如果不给，默认输出出错的那一行代码 <br/>
-
-assest 的文档（非常建议看）: <br/>
-https://nodejs.org/api/assert.html#assert_assert_deepstrictequal_actual_expected_message <br/>
-
-
-<br/>
-#### 5. 文档里有一段注释 AST 结构的看不大清楚，我重新复制下
+#### 2. 文档里有一段注释 AST 结构的看不大清楚，我重新复制下
 建议弄到 json formatter 里弄成可以折叠的，这样看的更清楚
 https://jsonformatter.curiousconcept.com/
 ```
@@ -296,15 +268,6 @@ callee:{
 },
 
 ```
-
-
-
-
-
-
-
-
-
 
 
 

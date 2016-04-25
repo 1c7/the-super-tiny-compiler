@@ -1154,7 +1154,7 @@ function compiler(input) {
  */
 
 // Now I'm just exporting everything...
-// 导出所有东西, 不然在 test.js 里 require 之后会拿不到这些函数, 提示 xxx is not a function 错误(好像是这样你可以试试)
+// 导出所有东西, 不然在 test.js 里 require 之后会拿不到这些函数, 调用函数会提示 xxx is not a function 错误
 module.exports = {
   tokenizer: tokenizer,
   parser: parser,
