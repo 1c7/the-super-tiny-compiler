@@ -89,9 +89,11 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 1. 先跑一遍 ```nodejs test.js``` 看下结果
 ![test.js 运行结果](run testjs.png)
 
-2. 打开 ``` test.js ``` 理解是怎么测的 (手工先写好正确结果, 然后看程序输出的是否匹配 )
+2. 打开 ``` test.js ``` 理解是怎么测的 (手工先写好正确结果, 然后看程序输出的是否匹配 )  
+![test.js 文件内容](test.png)
 
 3. 打开 ```super-tiny-compiler.js``` 看代码和注释即可 <br/>
+![super-tiny-compiler.js 文件内容](compiler.png)
 
 3.  (Python 版)看完 NodeJS 版本应该就差不多了, 觉得没理解想换种语言看看的, 
 <br/> 可以看 Python 版的: https://github.com/josegomezr/the-super-tiny-compiler <br/>
