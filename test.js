@@ -81,7 +81,11 @@ assert.deepStrictEqual(transformer(ast), newAst, 'Transformer should turn `ast` 
 assert.deepStrictEqual(codeGenerator(newAst), output, 'Code Generator should turn `newAst` into `output` string');
 assert.deepStrictEqual(compiler(input), output, 'Compiler should turn `input` into `output`');
 
-console.log('All Passed!');
+console.log();
+console.log('测试编译器是否正确的 5 项测试全部通过!');
+console.log('编译前: ' + input);
+console.log('编译后: ' + compiler(input));
+console.log();
 
 /*
 console.log 之前那 5 行 assert.deepStrictEqual 是关键

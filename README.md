@@ -79,13 +79,18 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 
 <br/>
 #### 3. 怎么学
-1.  直接打开 ```super-tiny-compiler.js``` 看代码和注释即可 <br/>
+这里只有2个最重要的文件 <br/><br/>
 
-2. 看完再继续看 ```test.js```, <br/>
-```test.js``` 是测试 ```super-tiny-compiler.js``` 里写的编译器,  <br/><br/>
-运行方法 ```nodejs test.js```
-只会输出 All Passed! 没啥惊人的 <br/>
-因为  ```super-tiny-compiler.js``` 里面就只有编译器, 没有测试案例 <br/>
+```super-tiny-compiler.js``` 是编译器 <br/>
+```test.js``` 是测试 ```super-tiny-compiler.js``` 这个编译器 <br/>
+
+
+1. 先跑一遍 ```nodejs test.js``` 看下结果
+![test.js 运行结果](run testjs.png)
+
+2. 打开 ``` test.js ``` 理解是怎么测的 (手工先写好正确结果, 然后看程序输出的是否匹配 )
+
+3. 打开 ```super-tiny-compiler.js``` 看代码和注释即可 <br/>
 
 3.  (Python 版)看完 NodeJS 版本应该就差不多了, 觉得没理解想换种语言看看的, 
 <br/> 可以看 Python 版的: https://github.com/josegomezr/the-super-tiny-compiler <br/>
