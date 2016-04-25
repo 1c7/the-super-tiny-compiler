@@ -82,7 +82,7 @@ super-tiny-compiler.js 里的注释多, 虽然是一方面帮助了理解, <br/>
 1.  直接打开 ```super-tiny-compiler.js``` 看代码和注释即可 <br/>
 看完再继续看 ```test.js```, <br/>
 ```test.js``` 是测试 ```super-tiny-compiler.js``` 里写的编译器,  <br/>
-运行方法 ```nodejs test.js``` // 只会输出 All Passed! 没啥惊人的
+运行方法 ```nodejs test.js``` // 只会输出 All Passed! 没啥惊人的 <br/>
 因为  ```super-tiny-compiler.js``` 里面就只有编译器, 没有测试案例 <br/>
 
 2.  (Python 版)看完 NodeJS 版本应该就差不多了, 觉得没理解想换种语言看看的, 
@@ -105,7 +105,7 @@ super-tiny-compiler.rb               编译器(Ruby)
 
 <br/>
 <br/>
-### 后面不太重要可以不看
+### 后面不重要可以不看
 
 ---
 
