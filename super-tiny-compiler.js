@@ -225,8 +225,9 @@
  * There are these objects with a type property. Each of these are known as an
  * AST Node. These nodes have defined properties on them that describe one
  * isolated part of the tree.
-   你可能注意到了 AST 看起来蛮眼熟的, AST 里每一个都叫做 Node(节点).
-   和 token 一样有个 type 属性.
+   你可能注意到了 AST 看起来蛮眼熟的, 
+   它和 token 一样有 type 属性.
+   然后的话, AST 里每一个都叫做 Node(节点).
      
  *
  * We can have a node for a "NumberLiteral":
@@ -238,7 +239,7 @@
  *   }
  *
  * Or maybe a node for a "CallExpression":
-   表示 CallExpression 的节点
+   用类型为 CallExpression 的节点表示调用表达式(比如add和subtract)
  *
  *   {
  *     type: 'CallExpression',
@@ -250,7 +251,8 @@
  * adding/removing/replacing properties, we can add new nodes, remove nodes, or
  * we could leave the existing AST alone and create an entirely new one based
  * on it.
-   变形 AST 时我们可以给节点 添加/删除/替换 属性, 也可以添加节点, 删除节点。
+   变形 AST 时我们可以给节点 添加/删除/替换 属性.
+   或者干脆就添加节点, 删除节点。
    或是基于 AST 的信息，弄个全新的 AST，而不是去修改原来的 AST 
  *
  * Since we’re targeting a new language, we’re going to focus on creating an
@@ -263,7 +265,7 @@
  * In order to navigate through all of these nodes, we need to be able to
  * traverse through them. This traversal process goes to each node in the AST
  * depth-first.
-   我们需要深度优先遍历 AST 的各个节点来变形
+   我们用深度优先(depth-first)方式遍历 AST 的各个节点来变形
  *
  *   {
  *     type: 'Program',
@@ -288,7 +290,7 @@
  *   }
  *
  * So for the above AST we would go:
-   对于以上的 AST, 深度优先遍历的访问顺序是: 
+   对于以上的 AST, 深度优先这种遍历方式的访问顺序是: 
  *
  *   1. Program - Starting at the top level of the AST
  *   2. CallExpression (add) - Moving to the first element of the Program's body
@@ -297,6 +299,7 @@
  *   5. NumberLiteral (4) - Moving to the first element of CallExpression's params
  *   6. NumberLiteral (2) - Moving to the second element of CallExpression's params
  *
+   上面这段没翻, 想必你也看得懂.
    简单说就是  add 2 subtract 4 2 这么按顺序访问
    
  * If we were manipulating this AST directly, instead of creating a separate AST,
