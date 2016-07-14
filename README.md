@@ -1,61 +1,7 @@
-## 超小编译器 
-##### (原作者: James Kyle, 译者: Github@1c7)
-##### 中文注释在最下面, 上面这里我保留了原作者的英文说明.
-<br/>
-
----
-
-***Welcome to The Super Tiny Compiler!***
-
-This is an ultra-simplified example of all the major pieces of a modern compiler
-written in easy to read JavaScript.
-
-Reading through the guided code will help you learn about how *most* compilers
-work from end to end.
-
-### [Want to jump into the code? Click here](super-tiny-compiler.js)
-
----
-
-### Why should I care?
-
-That's fair, most people don't really have to think about compilers in their day
-jobs. However, compilers are all around you, tons of the tools you use are based
-on concepts borrowed from compilers.
-
-### But compilers are scary!
-
-Yes, they are. But that's our fault (the people who write compilers), we've
-taken something that is reasonably straightforward and made it so scary that
-most think of it as this totally unapproachable thing that only the nerdiest of
-the nerds are able to understand.
-
-### Okay so where do I begin?
-
-Awesome! Head on over to the [super-tiny-compiler.js](super-tiny-compiler.js)
-file.
-
-### I'm back, that didn't make sense
-
-Ouch, I'm really sorry. I'm planning on doing a lot more work on this to add
-inline annotations. If you want to come back when that's done, you can either
-watch/star this repo or follow me on
-[twitter](https://twitter.com/thejameskyle) for updates.
-
-### Tests
-
-Run with `node test.js`
-
----
-
-[![cc-by-4.0](https://licensebuttons.net/l/by/4.0/80x15.png)](http://creativecommons.org/licenses/by/4.0/)
-
+### this fork repo translate all english comment to chinese, intent to help chinese programmer understand compiler
+## 超小编译器  (原作者: James Kyle, 译者: Github@1c7)
 
 <br/>
-
----
-
-
 ### 1. 首先
 1. 这个编译器用的语言是 Node.js <br/>
 2. 编译器能把 ``` (add 2 (substract 4 2)) ``` 编译成 ``` add(2, subtract(4, 2)); ``` <br/>
@@ -117,7 +63,7 @@ super-tiny-compiler.rb               编译器(Ruby)
 
 <br/>
 <br/>
-### 后面不重要可以不看
+### 下面的说明并不是非常不重要，可以不看
 
 ---
 
