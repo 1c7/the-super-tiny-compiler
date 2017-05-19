@@ -39,8 +39,8 @@ super-tiny-compiler.js 里的注释多, 一方面帮助理解, <br/>
 ```test.js``` 是测试 ```super-tiny-compiler.js``` 这个编译器 <br/><br/>
 
 
-1. 先跑一遍 ```nodejs test.js``` 看下结果
-![test.js 运行结果](run testjs.png)
+1. 先跑一遍 ```nodejs test.js``` 看下结果  
+![test.js 运行结果](run%20testjs.png)
 
 2. 打开 ``` test.js ``` 理解是怎么测的 (手工先写好正确结果, 然后看程序输出的是否匹配 )  
 ![test.js 文件内容](test.png)
